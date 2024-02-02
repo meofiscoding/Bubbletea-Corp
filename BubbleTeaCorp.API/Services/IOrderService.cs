@@ -8,6 +8,6 @@ namespace BubbleTeaCorp.API.Services
 {
     public interface IOrderService
     {
-        Task SaveOrder(OrderDto orderDto);
+        Task<bool> SaveOrder(OrderDto orderDto);
     }
 }
