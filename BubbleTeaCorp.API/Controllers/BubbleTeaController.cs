@@ -16,7 +16,7 @@ namespace BubbleTeaCorp.API.Controllers
         }
 
         [HttpPost("saveOrder")]
-        public IActionResult SaveOrder([FromBody] OrderDto orderDto)
+        public async Task<IActionResult> SaveOrder([FromBody] OrderDto orderDto)
         {
             try
             {
@@ -26,8 +26,13 @@ namespace BubbleTeaCorp.API.Controllers
                     return BadRequest(ModelState);
                 }
 
-                _orderService.SaveOrder(orderDto);
-                return Ok();
+                var success = await _orderService.SaveOrder(orderDto);
+                if (!success)
+                {
+                    return BadRequest("Error saving order");
+                }
+
+                return Ok("Order created successfully!!");
             }
             catch (Exception ex)
             {
