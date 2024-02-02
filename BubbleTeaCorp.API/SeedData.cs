@@ -1,6 +1,5 @@
 using System.Text.Json;
 using BubbleTeaCorp.API.Entities;
-using BubbleTeaCorp.API.Enums;
 
 namespace BubbleTeaCorp.API
 {
