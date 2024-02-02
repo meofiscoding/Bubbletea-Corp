@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  bubbleteacorp.api:
+    image: ${DOCKER_REGISTRY-}bubbleteacorp
+    build:
+      context: .
+      dockerfile: BubbleTeaCorp.API/Dockerfile
