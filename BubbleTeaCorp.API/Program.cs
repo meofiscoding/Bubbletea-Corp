@@ -11,8 +11,25 @@ builder.Services.AddSwaggerGen();
 // Configure service
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddDbContext<BubbleTeaDbContext>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
+
+// Seed the database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<BubbleTeaDbContext>();
+        SeedData.Initialize(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

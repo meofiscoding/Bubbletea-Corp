@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BubbleTeaCorp.API.Entities;
 using BubbleTeaCorp.API.Enums;
 
@@ -45,6 +41,7 @@ namespace BubbleTeaCorp.API
                     new Topping { Name = "Cream Top" },
                     new Topping { Name = "Oreo" }
                 );
+                context.SaveChanges();
             }
 
             // Seed DefaultConfiguration
@@ -55,9 +52,10 @@ namespace BubbleTeaCorp.API
                     {
                         FlavourId = context.Flavours.First(f => f.Name == "Brown Sugar").Id,
                         DefaultIceLevelId = context.IceLevels.First(i => i.IceAmount == "Full").Id,
-                        DefaultToppingId = context.Toppings.First(t => t.Name == "Taopica Pearls").Id
+                        DefaultToppingId = context.Toppings.First(t => t.Name == "Tapioca Pearls").Id
                     }
                 );
+                context.SaveChanges();
             }
         }
     }
