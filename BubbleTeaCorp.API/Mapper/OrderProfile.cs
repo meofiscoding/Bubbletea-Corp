@@ -8,7 +8,9 @@ namespace BubbleTeaCorp.API.Mapper
     {
         public OrderProfile()
         {
-            CreateMap<OrderDto, Order>().ReverseMap();
+            // mapping all element from orderDTO to Order except BubbleTeas
+            CreateMap<OrderDto, Order>()
+                .ForMember(dest => dest.BubbleTeas, opt => opt.Ignore());
         }
     }
 }
