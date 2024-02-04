@@ -38,11 +38,8 @@ namespace BubbleTeaCorp.API.Services
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
 
-                // Handle pre-defined flavour
-                List<BubbleTea> bubbleTeas = await HandlePredefinedFlavour(OrderRequestDto.BubbleTeas);
-
-                // Explicitly map BubbleTeas to order
-                order.BubbleTeas = bubbleTeas;
+                // Handle pre-defined flavour and explicitly map BubbleTeas to order
+                order.BubbleTeas = await HandlePredefinedFlavour(OrderRequestDto.BubbleTeas);
 
                 // Save bubbleTea with its orderID
                 foreach (var bubbleTea in order.BubbleTeas)
