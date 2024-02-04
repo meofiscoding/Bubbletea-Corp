@@ -1,0 +1,79 @@
+{
+  "Stores": [
+    {
+      "StoreNumber": 1,
+      "StoreName": "Store 1"
+    },
+    {
+      "StoreNumber": 2,
+      "StoreName": "Store 2"
+    }
+  ],
+  "Flavours": [
+    {
+      "Id": 1,
+      "Name": "Milk Tea",
+      "Type": 0,
+      "DefaultConfigurations": [
+      ]
+    },
+    {
+      "Id": 2,
+      "Name": "Premium Milk Tea",
+      "Type": 0,
+      "DefaultConfigurations": [
+      ]
+    },
+    {
+      "Id": 3,
+      "Name": "Lychee",
+      "Type": 0,
+      "DefaultConfigurations": [
+      ]
+    },
+    {
+      "Id": 4,
+      "Name": "Brown Sugar",
+      "Type": 1,
+      "DefaultConfigurations": [
+        {
+          "DefaultConfigurationId": 4,
+          "DefaultToppingId": 1,
+          "DefaultIceLevelId": 1
+        }
+      ]
+    }
+  ],
+  "IceLevels": [
+    {
+      "Id": 1,
+      "IceAmount": "Full"
+    },
+    {
+      "Id": 2,
+      "IceAmount": "Half"
+    },
+    {
+      "Id": 3,
+      "IceAmount": "None"
+    }
+  ],
+  "Toppings": [
+    {
+      "Id": 1,
+      "Name": "Tapioca Pearls"
+    },
+    {
+      "Id": 2,
+      "Name": "Jelly"
+    },
+    {
+      "Id": 3,
+      "Name": "Cream Top"
+    },
+    {
+      "Id": 4,
+      "Name": "Oreo"
+    }
+  ]
+}

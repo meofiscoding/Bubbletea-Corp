@@ -11,6 +11,7 @@ namespace BubbleTeaCorp.API
             options.UseInMemoryDatabase("BubbleteaDB");
         }
 
+        public DbSet<Store> Stores { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Flavour> Flavours { get; set; }
         public DbSet<Topping> Toppings { get; set; }

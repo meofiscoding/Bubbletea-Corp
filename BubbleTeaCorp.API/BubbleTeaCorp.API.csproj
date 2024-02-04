@@ -16,10 +16,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.26" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
 </Project>

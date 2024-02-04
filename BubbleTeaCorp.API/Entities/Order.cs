@@ -15,9 +15,6 @@ namespace BubbleTeaCorp.API.Entities
         public int StoreNumber { get; set; }
 
         [Required]
-        public int OrderNumber { get; set; }
-
-        [Required]
         public DateTime OrderDateTime { get; set; }
 
         [Required]

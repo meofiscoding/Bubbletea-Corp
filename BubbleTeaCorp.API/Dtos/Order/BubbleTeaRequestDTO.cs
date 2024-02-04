@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BubbleTeaCorp.API.Dtos
 {
-    public class BubbleTeaDTO
+    public class BubbleTeaRequestDTO
     {
         [Required]
         public int FlavourId { get; set; }

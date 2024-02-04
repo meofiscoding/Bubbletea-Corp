@@ -20,18 +20,32 @@ namespace BubbleTeaCorp.API.Services
             _mapper = mapper;
             _logger = logger;
         }
-        public async Task<bool> SaveOrder(OrderDto orderDto)
+        public async Task<OrderResponseDTO> SaveOrder(OrderRequestDto OrderRequestDto)
         {
             try
             {
-                // Mapping between OrderDto and Order
-                var order = _mapper.Map<Order>(orderDto);
+                // validate StoreNumber if it exists in the database
+                if (!_context.Stores.Any(x => x.StoreNumber == OrderRequestDto.StoreNumber))
+                {
+                    return new OrderResponseDTO()
+                    {
+                        IsSuccess = false,
+                        Message = $"Store number {OrderRequestDto.StoreNumber} not found"
+                    };
+                }
+
+                // Mapping between OrderRequestDto and Order
+                var order = _mapper.Map<Order>(OrderRequestDto);
                 // Add order to the repository
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
 
                 // Handle pre-defined flavour
-                List<BubbleTea> bubbleTeas = await HandlePredefinedFlavour(orderDto.BubbleTeas);
+                List<BubbleTea> bubbleTeas = await HandlePredefinedFlavour(OrderRequestDto.BubbleTeas);
+
+                // Explicitly map BubbleTeas to order
+                order.BubbleTeas = bubbleTeas;
+
                 // Save bubbleTea with its orderID
                 foreach (var bubbleTea in order.BubbleTeas)
                 {
@@ -40,13 +54,25 @@ namespace BubbleTeaCorp.API.Services
                 }
 
                 await _context.SaveChangesAsync();
-                return true;
+
+                var savedOrder = _context.Orders
+                        .Include(x => x.BubbleTeas)
+                        .FirstOrDefault(x => x.OrderId == order.OrderId);
+
+                return new OrderResponseDTO()
+                {
+                    IsSuccess = true,
+                    Message = "Order saved successfully",
+                    Data = _mapper.Map<OrderResponse>(savedOrder)
+                };
             }
             catch (Exception ex)
             {
-                // TODO: Log error
-                _logger.LogError($"Error saving order due to: {ex.Message}");
-                return false;
+                return new OrderResponseDTO()
+                {
+                    IsSuccess = false,
+                    Message = $"Error saving order due to: {ex.Message}"
+                };
             }
         }
 
@@ -55,19 +81,17 @@ namespace BubbleTeaCorp.API.Services
         /// Then get its pre-defined stuff from DefaultConfiguration table and set value to its Topping and IceLevel
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        private async Task<List<BubbleTea>> HandlePredefinedFlavour(List<BubbleTeaDTO> bubbleTeas)
+        private async Task<List<BubbleTea>> HandlePredefinedFlavour(List<BubbleTeaRequestDTO> bubbleTeas)
         {
             List<BubbleTea> result = new();
             foreach (var bubbleTea in bubbleTeas)
             {
                 BubbleTea cup = _mapper.Map<BubbleTea>(bubbleTea);
-                // Get flavor by flavourID
+                // Get Flavour of cup
                 cup.Flavour = await _context.Flavours
                     .FirstOrDefaultAsync(x => x.Id == bubbleTea.FlavourId)
                     ?? throw new ArgumentNullException($"Flavour with ID {bubbleTea.FlavourId} not found");
-                cup.Toppings = await _context.Toppings
-                    .Where(x => bubbleTea.ToppingIds.Contains(x.Id))
-                    .ToListAsync();
+
                 // Case when bubbleTea is brownSugar flavour
                 if (cup.Flavour.Type == FlavourType.NonCustomizable_BrownSugar)
                 {
@@ -75,11 +99,23 @@ namespace BubbleTeaCorp.API.Services
                     List<DefaultConfiguration> defaultConfiguration = await _context.DefaultConfigurations
                         .Where(x => x.FlavourId == bubbleTea.FlavourId)
                         .Include(x => x.DefaultTopping)
+                        .Include(x => x.DefaultIceLevel)
                         .ToListAsync();
 
                     // Set value to bubbleTea
-                    cup.IceAmountId = defaultConfiguration.Select(x => x.DefaultIceLevelId).FirstOrDefault();
+                    cup.IceAmount = defaultConfiguration.Select(x => x.DefaultIceLevel).FirstOrDefault();
                     cup.Toppings = defaultConfiguration.ConvertAll(x => x.DefaultTopping);
+                }
+                else
+                {
+                    // Normal case
+                    cup.Toppings = await _context.Toppings
+                        .Where(x => bubbleTea.ToppingIds.Contains(x.Id))
+                        .ToListAsync();
+
+                    cup.IceAmount = await _context.IceLevels
+                        .FirstOrDefaultAsync(x => x.Id == bubbleTea.IceAmountId)
+                        ?? throw new ArgumentNullException($"IceAmount with ID {bubbleTea.IceAmountId} not found");
                 }
                 result.Add(cup);
             }
