@@ -32,8 +32,14 @@ namespace BubbleTeaCorp.API.Entities
         {
             get
             {
-                decimal toppingsPrice = Toppings.Sum(t => t.Price);
-                return Flavour.Price + Consts.IceAmountPrice + toppingsPrice;
+                decimal totalPrice = Flavour.Price + Consts.IceAmountPrice;
+
+                if (Toppings?.Any() == true)
+                {
+                    totalPrice += Toppings.Sum(t => t.Price);
+                }
+
+                return totalPrice;
             }
         }
         // Navigation property for Toppings
