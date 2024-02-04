@@ -10,7 +10,8 @@ namespace BubbleTeaCorp.API.Mapper
         {
             // mapping all element from OrderRequestDto to Order except BubbleTeas
             CreateMap<OrderRequestDto, Order>()
-                .ForMember(dest => dest.BubbleTeas, opt => opt.Ignore());
+                .ForMember(dest => dest.BubbleTeas, opt => opt.Ignore())
+                .ForMember(dest => dest.TotalOrderPrice, opt => opt.Ignore());
 
             CreateMap<Order, OrderResponse>()
                 .ForMember(dest => dest.OrderNumber, opt => opt.MapFrom(src => src.OrderId))

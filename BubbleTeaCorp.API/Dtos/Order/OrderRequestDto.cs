@@ -7,8 +7,9 @@ namespace BubbleTeaCorp.API.Dtos
                 toppings, amount of ice and the total order price.
         */
         public int StoreNumber { get; set; }
+
         public DateTime OrderDateTime { get; set; } = DateTime.Now;
+
         public List<BubbleTeaRequestDTO> BubbleTeas { get; set; } = new List<BubbleTeaRequestDTO>();
-        public decimal TotalOrderPrice { get; set; }
     }
 }

@@ -40,6 +40,7 @@ namespace BubbleTeaCorp.API.Services
 
                 // Handle pre-defined flavour and explicitly map BubbleTeas to order
                 order.BubbleTeas = await HandlePredefinedFlavour(OrderRequestDto.BubbleTeas);
+                order.TotalOrderPrice = order.BubbleTeas.Sum(x => x.TotalPrice);
 
                 // Save bubbleTea with its orderID
                 foreach (var bubbleTea in order.BubbleTeas)
@@ -112,6 +113,7 @@ namespace BubbleTeaCorp.API.Services
                         .FirstOrDefaultAsync(x => x.Id == bubbleTea.IceAmountId)
                         ?? throw new ArgumentNullException($"IceAmount with ID {bubbleTea.IceAmountId} not found");
                 }
+
                 result.Add(cup);
             }
             return result;

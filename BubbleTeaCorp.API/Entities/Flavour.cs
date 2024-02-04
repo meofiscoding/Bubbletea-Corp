@@ -15,6 +15,9 @@ namespace BubbleTeaCorp.API.Entities
         [Required]
         public FlavourType Type { get; set; }
 
+        [Required]
+        public decimal Price { get; set; }
+
         // Navigation property for DefaultConfigurations
         public virtual List<DefaultConfiguration> DefaultConfigurations { get; set; } = new();
 

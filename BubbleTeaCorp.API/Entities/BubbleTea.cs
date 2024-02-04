@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BubbleTeaCorp.API.Constants;
 
 namespace BubbleTeaCorp.API.Entities
 {
@@ -26,6 +27,15 @@ namespace BubbleTeaCorp.API.Entities
         [ForeignKey("IceAmountId")]
         public virtual IceLevel IceAmount { get; set; }
 
+        // Total price = Flavour price + Topping price + IceAmount price
+        public decimal TotalPrice
+        {
+            get
+            {
+                decimal toppingsPrice = Toppings.Sum(t => t.Price);
+                return Flavour.Price + Consts.IceAmountPrice + toppingsPrice;
+            }
+        }
         // Navigation property for Toppings
         public virtual List<Topping> Toppings { get; set; } = new();
     }

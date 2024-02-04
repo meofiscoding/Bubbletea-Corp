@@ -10,6 +10,8 @@ namespace BubbleTeaCorp.API.Entities
         [Required]
         public string Name { get; set; } = string.Empty;
 
+        public decimal Price { get; set; }
+
         // Navigation property for BubbleTeas
         public virtual List<BubbleTea> BubbleTeas { get; set; } = new();
 
