@@ -14,22 +14,19 @@
       "Id": 1,
       "Name": "Milk Tea",
       "Type": 0,
-      "DefaultConfigurations": [
-      ]
+      "DefaultConfigurations": []
     },
     {
       "Id": 2,
       "Name": "Premium Milk Tea",
       "Type": 0,
-      "DefaultConfigurations": [
-      ]
+      "DefaultConfigurations": []
     },
     {
       "Id": 3,
       "Name": "Lychee",
       "Type": 0,
-      "DefaultConfigurations": [
-      ]
+      "DefaultConfigurations": []
     },
     {
       "Id": 4,
@@ -74,6 +71,80 @@
     {
       "Id": 4,
       "Name": "Oreo"
+    }
+  ],
+  "Orders": [
+    {
+      "orderId": 1,
+      "storeNumber": 1,
+      "orderDateTime": "2023-05-01T10:00:00.000Z",
+      "totalOrderPrice": 40.99
+    },
+    {
+      "orderId": 2,
+      "storeNumber": 1,
+      "orderDateTime": "2023-05-05T12:30:00.000Z",
+      "totalOrderPrice": 55.75
+    },
+    {
+      "orderId": 3,
+      "storeNumber": 1,
+      "orderDateTime": "2023-05-10T15:45:00.000Z",
+      "totalOrderPrice": 30.50
+    },
+    {
+      "orderId": 4,
+      "storeNumber": 1,
+      "orderDateTime": "2023-05-15T18:00:00.000Z",
+      "totalOrderPrice": 45.25
+    },
+    {
+      "orderId": 5,
+      "storeNumber": 1,
+      "orderDateTime": "2023-05-20T20:30:00.000Z",
+      "totalOrderPrice": 50.50
+    },
+    {
+      "orderId": 6,
+      "storeNumber": 2,
+      "orderDateTime": "2023-05-25T22:45:00.000Z",
+      "totalOrderPrice": 65.99
+    },
+    {
+      "orderId": 7,
+      "storeNumber": 2,
+      "orderDateTime": "2023-05-28T23:59:00.000Z",
+      "totalOrderPrice": 40.25
+    },
+    {
+      "orderId": 8,
+      "storeNumber": 2,
+      "orderDateTime": "2023-05-29T08:30:00.000Z",
+      "totalOrderPrice": 30.50
+    },
+    {
+      "orderId": 9,
+      "storeNumber": 2,
+      "orderDateTime": "2023-05-29T12:00:00.000Z",
+      "totalOrderPrice": 55.99
+    },
+    {
+      "orderId": 10,
+      "storeNumber": 2,
+      "orderDateTime": "2023-05-30T15:15:00.000Z",
+      "totalOrderPrice": 60.50
+    },
+    {
+      "orderId": 11,
+      "storeNumber": 2,
+      "orderDateTime": "2023-05-31T17:30:00.000Z",
+      "totalOrderPrice": 48.75
+    },
+    {
+      "orderId": 12,
+      "storeNumber": 2,
+      "orderDateTime": "2023-05-31T20:00:00.000Z",
+      "totalOrderPrice": 52.25
     }
   ]
 }

@@ -1,5 +1,5 @@
-using System.Text.Json;
 using BubbleTeaCorp.API.Entities;
+using Newtonsoft.Json;
 
 namespace BubbleTeaCorp.API
 {
@@ -42,19 +42,19 @@ namespace BubbleTeaCorp.API
                 context.SaveChanges();
             }
 
-            // Seed DefaultConfiguration
-            if (!context.DefaultConfigurations.Any())
+            // Seed Order
+            if (!context.Orders.Any())
             {
-                DefaultConfiguration[] defaultConfigurations = ExtractJsonDataBySection<DefaultConfiguration>(data, nameof(context.DefaultConfigurations));
-                context.DefaultConfigurations.AddRange(defaultConfigurations);
+                Order[] order = ExtractJsonDataBySection<Order>(data, nameof(context.Orders));
+                context.Orders.AddRange(order);
                 context.SaveChanges();
             }
         }
 
         private static T[]? ExtractJsonDataBySection<T>(string data, string sectionName)
         {
-            var resultData = JsonSerializer.Deserialize<JsonElement>(data).GetProperty(sectionName).ToString();
-            return JsonSerializer.Deserialize<T[]>(resultData);
+            var resultData = JsonConvert.DeserializeObject<Dictionary<string, object>>(data)[sectionName];
+            return JsonConvert.DeserializeObject<T[]>(JsonConvert.SerializeObject(resultData));
         }
     }
 }
