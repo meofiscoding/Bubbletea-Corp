@@ -8,13 +8,11 @@ namespace BubbleTeaCorp.API.Controllers
     {
         private readonly ILogger<BubbleTeaController> _logger;
         private readonly IOrderService _orderService;
-        private readonly IStoreService _storeService;
 
-        public BubbleTeaController(ILogger<BubbleTeaController> logger, IOrderService orderService, IStoreService storeService)
+        public BubbleTeaController(ILogger<BubbleTeaController> logger, IOrderService orderService)
         {
             _logger = logger;
             _orderService = orderService;
-            _storeService = storeService;
         }
 
         [HttpPost("saveOrder")]
@@ -33,19 +31,6 @@ namespace BubbleTeaCorp.API.Controllers
             }
 
             return Ok(result);
-        }
-
-        [HttpGet("report")]
-        public List<StoreReportDTO> GetReport([FromQuery] string monthYear)
-        {
-            try
-            {
-                return _storeService.GetReport(monthYear);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error getting report: {ex.Message}");
-            }
         }
     }
 }
